@@ -1,20 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using VehicleProject.Entity;
+using VehicleProject.Entity.Models;
 
 namespace VehicleProject.Data
 {
     public class IocDbContext : DbContext, IDbContext
     {
-        public IocDbContext() : base("name=DbConnectionString")
-        { 
+        public IocDbContext() : base("Server=.\\SQLEXPRESS01;Database=VehicleDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;")
+        {
         }
+
+        public DbSet<VehicleMake> VehicleMakes { get; set; }
+
+        public DbSet<VehicleModel> VehicleModel { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -25,7 +27,7 @@ namespace VehicleProject.Data
 
             foreach (var type in typesToRegister)
             {
-                dynamic configurationInstance = Activator.CreateInstance(type); 
+                dynamic configurationInstance = Activator.CreateInstance(type);
                 modelBuilder.Configurations.Add(configurationInstance);
             }
 
@@ -35,7 +37,7 @@ namespace VehicleProject.Data
 
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
         {
-            return base.Set<TEntity>(); 
+            return base.Set<TEntity>();
         }
     }
 }

@@ -1,27 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Configuration;
 using System.Diagnostics;
 using Vehicle.Service;
-using VehicleProject.Data;
-using VehicleProject.Entity;
-using VehicleProjectWeb.Models;
+using VehicleProject.Entity.Models;
+using VehicleProject.WEB.Models;
 
-namespace VehicleProjectWeb.Controllers
+namespace VehicleProject.WEB.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IRepository<BaseEntity> _repository;
-        private readonly IVehicleService _vehicleService;
-        public HomeController(ILogger<HomeController> logger, IRepository<BaseEntity> repository, IVehicleService vehicleService)
+        private IVehicleService _vehicleService;
+        public HomeController(ILogger<HomeController> logger, IVehicleService vehicleService)
         {
             _logger = logger;
-            _repository = repository;
             _vehicleService = vehicleService;
         }
 
         public IActionResult Index()
         {
+            VehicleMake vehicle = new VehicleMake() 
+            {
+                Abrv="Audi",
+                Name ="Audi"
+                
+            };    
+            _vehicleService.InsertVehicle(vehicle);
             return View();
         }
 
