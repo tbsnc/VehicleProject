@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace VehicleProject.Entity.ModelsDTO
+using VehicleProject.Entity;
+namespace VehicleProject.Data.DTOs
 {
-    public class VehicleModelDTO
+    public class VehicleMakeDTO
     {
-        public int MakeId { get; set; }
 
         public string Name { get; set; }
 
         public string Abrv { get; set; }
-
     }
 }

@@ -6,6 +6,8 @@ using Vehicle.Service;
 using VehicleProject.Data;
 using VehicleProject.Entity;
 using VehicleProject.WEB.AutofacModule;
+using AutoMapper;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,5 +44,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

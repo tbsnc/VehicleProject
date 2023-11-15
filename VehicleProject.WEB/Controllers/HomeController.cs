@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Vehicle.Service;
 using VehicleProject.Data.Interfaces;
@@ -12,21 +13,25 @@ namespace VehicleProject.WEB.Controllers
         private readonly ILogger<HomeController> _logger;
 
        private readonly IUnitOfWork _unitOfWork;
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork,IMapper mapper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
      
         }
 
         public async Task<IActionResult> Index()
         {
-            VehicleMake vehicleMake = new VehicleMake() { 
-            Name="test",Abrv="test"};
+            ////VehicleMake vehicleMake = new VehicleMake() { 
+            ////Name="test",Abrv="test"};
 
-            await _unitOfWork.AddAsync(vehicleMake);
-            await _unitOfWork.CommitAsync();
-   
+            ////await _unitOfWork.AddAsync(vehicleMake);
+            ////await _unitOfWork.CommitAsync();
+            //var vehicleMake = await _unitOfWork.vehicleMakeRepo.GetAll();
+            //var vehicleMakeDto = _mapper.Map<IEnumerable<VehicleMake>>(vehicleMake);
+
             return View();
         }
 
