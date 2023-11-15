@@ -9,12 +9,6 @@ namespace Vehicle.Service
 {
     public interface IVehicleService
     {
-        IQueryable<VehicleMake> GetAll();
-        VehicleMake GetVehicle(long id);
-
-        void InsertVehicle(VehicleMake vehicle);
-        void UpdateVehicle(VehicleMake vehicle);
-        void DeleteVehicle(VehicleMake vehicle);
-
+ 
     }
 }

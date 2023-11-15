@@ -19,9 +19,16 @@ namespace VehicleProject.WEB.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VehicleMake>>> GetVehicleMake()
         {
-            List<VehicleMake> vehicleMake = _vehicleService.GetAll().ToList();
-            
-            return _vehicleService.GetAll().ToList();
+            var vehicleMake = _vehicleService.GetAllVehicleMake();
+
+
+            if (vehicleMake == null)
+            {
+                return NotFound();
+            }
+      
+            return Ok(vehicleMake);
+           
         }
     }
 }

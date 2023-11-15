@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Vehicle.Service;
+using VehicleProject.Data.Interfaces;
 using VehicleProject.Entity.Models;
 using VehicleProject.WEB.Models;
 
@@ -9,22 +10,23 @@ namespace VehicleProject.WEB.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IVehicleService _vehicleService;
-        public HomeController(ILogger<HomeController> logger, IVehicleService vehicleService)
+
+       private readonly IUnitOfWork _unitOfWork;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
-            _vehicleService = vehicleService;
+            _unitOfWork = unitOfWork;
+     
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            VehicleMake vehicle = new VehicleMake() 
-            {
-                Abrv="Audi",
-                Name ="Audi"
-                
-            };    
-            _vehicleService.InsertVehicle(vehicle);
+            VehicleMake vehicleMake = new VehicleMake() { 
+            Name="test",Abrv="test"};
+
+            await _unitOfWork.AddAsync(vehicleMake);
+            await _unitOfWork.CommitAsync();
+   
             return View();
         }
 

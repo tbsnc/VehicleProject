@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using VehicleProject.Entity;
 using VehicleProject.Entity.Models;
 
@@ -10,7 +11,7 @@ namespace VehicleProject.Data
 {
     public class IocDbContext : DbContext, IDbContext
     {
-        public IocDbContext() : base("Server=.\\SQLEXPRESS01;Database=VehicleDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;")
+        public IocDbContext() : base("Server=.\\SQLEXPRESS01;Database=VehicleDB1;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;")
         {
         }
 
@@ -39,5 +40,7 @@ namespace VehicleProject.Data
         {
             return base.Set<TEntity>();
         }
+        
+        
     }
 }

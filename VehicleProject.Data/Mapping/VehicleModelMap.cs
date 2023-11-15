@@ -16,8 +16,11 @@ namespace VehicleProject.Data.Mapping
             HasKey(t  => t.Id);
             Property(t => t.Name);
             Property(t => t.Abrv);
+            //HasRequired(t => t.VehicleMake).WithRequiredDependent(u => u.VehicleModel);
+            HasRequired(t => t.VehicleMake).WithMany().HasForeignKey(u => u.MakeId);
+            
             ToTable("VehicleModel");
-            HasRequired(t => t.VehicleMake).WithRequiredDependent(u => u.VehicleModel);
+
         }
 
     }
