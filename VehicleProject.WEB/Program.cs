@@ -14,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddEndpointsApiExplorer();
+
 //builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 //builder.Services.AddScoped<IDbContext,IocDbContext>();
 //builder.Services.AddScoped<IVehicleService,VehicleService>();
@@ -25,6 +27,12 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 
 
 var app = builder.Build();
+
+if(app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

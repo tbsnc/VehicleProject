@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleProject.Entity", "Ve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicle.Service", "Vehicle.Service\Vehicle.Service.csproj", "{931E2C1B-813B-47A6-8E49-6585D7360D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleProject.WEB", "VehicleProject.WEB\VehicleProject.WEB.csproj", "{0AD440B9-1551-42C6-90BD-032830366500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleProject.WEB", "VehicleProject.WEB\VehicleProject.WEB.csproj", "{0AD440B9-1551-42C6-90BD-032830366500}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleProject.WebAPI", "VehicleProject.WebAPI\VehicleProject.WebAPI.csproj", "{DA41A83F-7F36-49A0-B52C-A7FF1C4F6B31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0AD440B9-1551-42C6-90BD-032830366500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AD440B9-1551-42C6-90BD-032830366500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AD440B9-1551-42C6-90BD-032830366500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA41A83F-7F36-49A0-B52C-A7FF1C4F6B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA41A83F-7F36-49A0-B52C-A7FF1C4F6B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA41A83F-7F36-49A0-B52C-A7FF1C4F6B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA41A83F-7F36-49A0-B52C-A7FF1C4F6B31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

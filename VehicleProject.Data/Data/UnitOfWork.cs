@@ -97,12 +97,17 @@ namespace VehicleProject.Data.Data
         {
             try
             {
-                DbEntityEntry dbEntityEntry = _context.Entry(entity);
-                if (dbEntityEntry.State == EntityState.Detached)
+                var findEntity = _context.Set<T>().Find(entity.Id);
+                
+                if (findEntity == null)
                 {
                     _context.Set<T>().Attach(entity);
+                }else
+                {
+                    _context.Entry(findEntity).State = EntityState.Detached;
+                    _context.Set<T>().Attach(entity);
+                    _context.Entry(entity).State = EntityState.Modified;
                 }
-                dbEntityEntry.State = EntityState.Modified;
                 return Task.FromResult(1);
             }catch(Exception ex)
             {
