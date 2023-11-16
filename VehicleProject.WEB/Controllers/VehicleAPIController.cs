@@ -25,7 +25,7 @@ namespace VehicleProject.WEB.Controllers
         public async Task<ActionResult<IEnumerable<VehicleMake>>> GetAllVehicleMake()
         {
             var vehicleMake = await _unitOfWork.vehicleMakeRepo.GetAll();
-            var vehicleMakeDto = _mapper.Map<IEnumerable<VehicleMake>>(vehicleMake);
+            var vehicleMakeDto = _mapper.Map<IEnumerable<VehicleMakeDTO>>(vehicleMake);
 
             if (vehicleMake == null)
             {
@@ -41,7 +41,7 @@ namespace VehicleProject.WEB.Controllers
         public async Task<ActionResult<IEnumerable<VehicleModel>>> GetAllVehicleModel()
         {
             var vehicleModel = await _unitOfWork.vehicleModelRepo.GetAll();
-            var vehicleModelDto = _mapper.Map<IEnumerable<VehicleModel>>(vehicleModel);
+            var vehicleModelDto = _mapper.Map<IEnumerable<VehicleModelDTO>>(vehicleModel);
 
             if (vehicleModel == null)
             {
