@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using VehicleProject.Entity;
-using VehicleProject.Entity.Models;
+using VehicleProject.Model;
 
-namespace VehicleProject.Data.Interfaces
+
+
+namespace VehicleProject.Repository.Common
 {
     public interface IUnitOfWork
     {
-        IRepository<VehicleMake> vehicleMakeRepo { get; }
-        IRepository<VehicleModel> vehicleModelRepo { get; }
-
         Task<int> CommitAsync();
         Task<int> AddAsync<T>(T entity) where T : BaseEntity;
         Task<int> UpdateAsync<T>(T entity) where T : BaseEntity;
         Task<int> DeleteAsync<T>(T entity) where T : BaseEntity;
         Task<int> DeleteAsync<T>(long id) where T : BaseEntity;
+
+        Task<IEnumerable<T>> GetAll<T>() where T : BaseEntity;
+        
+        Task<T> GetById<T>(long id) where T : BaseEntity;
+
     }
 
 }

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Transactions;
-using VehicleProject.Data.Interfaces;
-using VehicleProject.Entity;
-using VehicleProject.Entity.Models;
+using VehicleProject.Repository.Common;
+using VehicleProject.Model;
+using VehicleProject.Common;
+using System.Data.Entity;
 
-namespace VehicleProject.Data.Data
+namespace VehicleProject.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -20,10 +18,6 @@ namespace VehicleProject.Data.Data
             if(context == null) throw new ArgumentNullException("context");
             _context = context;
         }
-        public IRepository<VehicleMake> vehicleMakeRepo => 
-            new Repository<VehicleMake>(_context);
-        public IRepository<VehicleModel> vehicleModelRepo =>
-        new Repository<VehicleModel>(_context);
 
         public async Task<int> CommitAsync()
         {
@@ -115,6 +109,24 @@ namespace VehicleProject.Data.Data
             }
         }
 
- 
+        public async Task<IEnumerable<T>> GetAll<T>() where T : BaseEntity
+        {
+            try
+            {
+                return await _context.Set<T>().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+
+       public async Task<T> GetById<T>(long id) where T : BaseEntity
+        {
+            return await _context.Set<T>().FirstAsync(x => x.Id == id);
+        }
     }
 }

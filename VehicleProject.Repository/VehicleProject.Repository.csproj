@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A6CBE4C0-41C2-48BF-8481-9B8B401CAD2D}</ProjectGuid>
+    <ProjectGuid>{3ECFCC76-1FB9-4AB9-98EE-8918288143EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VehicleProject.Data</RootNamespace>
-    <AssemblyName>VehicleProject.Data</AssemblyName>
+    <RootNamespace>VehicleProject.Repository</RootNamespace>
+    <AssemblyName>VehicleProject.Repository</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -34,12 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=12.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.12.0.1\lib\net472\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.Extensions.Microsoft.DependencyInjection, Version=12.0.0.0, Culture=neutral, PublicKeyToken=e767ac9c89543656, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.Extensions.Microsoft.DependencyInjection.12.0.1\lib\net472\AutoMapper.Extensions.Microsoft.DependencyInjection.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -50,7 +44,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,9 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\IocDbContext.cs" />
-    <Compile Include="Mapping\VehicleMakeMap.cs" />
-    <Compile Include="Mapping\VehicleModelMap.cs" />
+    <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,15 +61,18 @@
       <Name>VehicleProject.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\VehicleProject.Entity\VehicleProject.Model.csproj">
-      <Project>{8edf4fe9-076b-4267-8c51-79f458812047}</Project>
+      <Project>{8EDF4FE9-076B-4267-8C51-79F458812047}</Project>
       <Name>VehicleProject.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VehicleProject.RepositoryCommon\VehicleProject.Repository.Common.csproj">
+      <Project>{B911734B-3E16-4B81-9831-112C7062A96F}</Project>
+      <Name>VehicleProject.Repository.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

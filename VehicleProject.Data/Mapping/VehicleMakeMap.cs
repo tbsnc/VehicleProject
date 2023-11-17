@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity.ModelConfiguration;
-using VehicleProject.Entity.Models;
+﻿using System.Data.Entity.ModelConfiguration;
+using VehicleProject.Model;
 
 namespace VehicleProject.Data.Mapping
 {

@@ -18,7 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Vehicle.Common\VehicleProject.Common.csproj" />
+    <ProjectReference Include="..\Vehicle.Service\VehicleProject.Service.csproj" />
     <ProjectReference Include="..\VehicleProject.Data\VehicleProject.Data.csproj" />
+    <ProjectReference Include="..\VehicleProject.Entity\VehicleProject.Model.csproj" />
+    <ProjectReference Include="..\VehicleProject.RepositoryCommon\VehicleProject.Repository.Common.csproj" />
+    <ProjectReference Include="..\VehicleProject.Repository\VehicleProject.Repository.csproj" />
+    <ProjectReference Include="..\VehicleService.Common\VehicleProject.Service.Common.csproj" />
   </ItemGroup>
 
 </Project>

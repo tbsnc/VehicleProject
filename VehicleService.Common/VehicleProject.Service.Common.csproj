@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EDF4FE9-076B-4267-8C51-79F458812047}</ProjectGuid>
+    <ProjectGuid>{3B945828-DB1A-4333-AB78-BB3D1A0C0EC8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VehicleProject.Entity</RootNamespace>
-    <AssemblyName>VehicleProject.Entity</AssemblyName>
+    <RootNamespace>VehicleService.Common</RootNamespace>
+    <AssemblyName>VehicleService.Common</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,7 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,10 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseEntity.cs" />
-    <Compile Include="Models\VehicleMake.cs" />
-    <Compile Include="Models\VehicleModel.cs" />
+    <Compile Include="Interfaces\IVehicleService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleProject.Entity\VehicleProject.Model.csproj">
+      <Project>{8edf4fe9-076b-4267-8c51-79f458812047}</Project>
+      <Name>VehicleProject.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

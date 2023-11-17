@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VehicleProject.Data.DTOs;
-using VehicleProject.Entity.Models;
+using VehicleProject.Common.DTOs;
+using VehicleProject.Model;
 
-namespace VehicleProject.Data.Helper
+namespace VehicleProject.Common.Helper
 {
     public class AutoMapperProfiles : Profile
     {

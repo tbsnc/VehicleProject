@@ -1,10 +1,12 @@
 ﻿using Autofac;
+using VehicleProject.Repository;
+using VehicleProject.Repository.Common;
 using VehicleProject.Data;
-using VehicleProject.Data.Data;
-using VehicleProject.Data.Interfaces;
+using VehicleProject.Common;
 using AutoMapper;
-using VehicleProject.Data.Helper;
-
+using VehicleProject.Common.Helper;
+using VehicleProject.Service.Common;
+using VehicleProject.Service;
 namespace VehicleProject.WEB.AutofacModule
 {
     public class AutofacModuleDI : Autofac.Module
@@ -12,14 +14,10 @@ namespace VehicleProject.WEB.AutofacModule
         protected override void Load(ContainerBuilder builder)
         {
 
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerDependency();
-
-
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
                 
             builder.RegisterType<IocDbContext>().As<IDbContext>().SingleInstance();
-            //  builder.RegisterType<VehicleService>().As<IVehicleService>().SingleInstance();
-
+            builder.RegisterType<VehicleService>().As<IVehicleService>().SingleInstance();  
 
 
             builder.RegisterType<AutoMapperProfiles>().As<Profile>();
