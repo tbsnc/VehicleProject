@@ -18,6 +18,7 @@ namespace VehicleProject.Repository.Common
         
         Task<T> GetById<T>(long id) where T : BaseEntity;
 
+        Task<IEnumerable<T>> QueryStringFilter<T>(string s, string orderby, int per_page, int num_page) where T : BaseEntity;
     }
 
 }

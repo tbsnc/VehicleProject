@@ -17,6 +17,6 @@ namespace VehicleProject.Service.Common
         Task<int> DeleteAsync<T>(T entity) where T : BaseEntity;
         Task<int> DeleteAsync<T>(long id) where T : BaseEntity;
 
-
+        Task<IEnumerable<T>> QueryStringFilter<T>(string s, string orderby, int per_page, int num_page) where T : BaseEntity;
     }
 }

@@ -7,6 +7,7 @@ using VehicleProject.Repository.Common;
 using VehicleProject.Model;
 using VehicleProject.Common;
 using System.Data.Entity;
+using System.Linq;
 
 namespace VehicleProject.Repository
 {
@@ -127,6 +128,34 @@ namespace VehicleProject.Repository
        public async Task<T> GetById<T>(long id) where T : BaseEntity
         {
             return await _context.Set<T>().FirstAsync(x => x.Id == id);
+        }
+
+
+
+        public async Task<IEnumerable<T>> QueryStringFilter<T>(string s, string orderby, int per_page, int num_page) where T : BaseEntity
+        {
+            var filter = await _context.Set<T>().ToListAsync();
+
+            if (!String.IsNullOrEmpty(s))
+            {
+                filter = filter.Where(m => m.Name.Contains(s)|| m.Abrv.Contains(s)).ToList();
+            }
+
+            if (orderby.ToLower() == "asc")
+            {
+                filter = filter.OrderBy(m => m.Id).ToList();
+            }
+            if (orderby.ToLower() == "desc")
+            {
+                filter = filter.OrderByDescending(m => m.Id).ToList();
+            }
+            if (num_page < 1) num_page = 1;
+            if (per_page > 0 && num_page > 0)
+            {
+                filter = filter.Skip((num_page - 1) * per_page).Take(per_page).ToList();
+            }
+
+            return filter;
         }
     }
 }

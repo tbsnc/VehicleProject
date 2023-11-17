@@ -99,5 +99,21 @@ namespace VehicleProject.WebAPI.Controllers
 
         }
 
+        [HttpGet("filter")]
+        public async Task<ActionResult> SearchByQueryString([FromQuery] string s = "",
+                                             [FromQuery] string orderby = "asc",
+                                             [FromQuery] int per_page = 0,
+                                             [FromQuery] int page = 0)
+        {
+            try
+            {
+                var movies = await _vehicleService.QueryStringFilter<VehicleModel>(s, orderby, per_page, page);
+                return Ok(movies);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data");
+            }
+        }
     }
 }

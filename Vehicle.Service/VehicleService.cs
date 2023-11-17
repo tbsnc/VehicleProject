@@ -50,5 +50,10 @@ namespace VehicleProject.Service
         {
             return await _unitOfWork.UpdateAsync<T>(entity);
         }
+
+        public async Task<IEnumerable<T>> QueryStringFilter<T>(string s, string orderby, int per_page, int num_page) where T : BaseEntity
+        {
+            return await _unitOfWork.QueryStringFilter<T>(s, orderby, per_page, num_page);
+        }
     }
 }
