@@ -23,19 +23,20 @@ namespace VehicleProject.WebAPI.Controllers
 
         // GET api/<VehicleAPIController>/<ActionName>/
         [HttpGet]
-        public async Task<ActionResult> GetAllVehicleMake()
+        public async Task<IActionResult> GetAllVehicleMake()
         {
             var vehicleMake = await _vehicleService.GetAll<VehicleMake>();
-            var vehicleMakeDto = _mapper.Map<IEnumerable<VehicleMakeDTO>>(vehicleMake);
 
-            if (vehicleMake == null)
+
+            if (vehicleMake == null || vehicleMake.Count() == 0)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error");
+                return StatusCode(StatusCodes.Status404NotFound, "Error");
             }
+            var vehicleMakeDto = _mapper.Map<IEnumerable<VehicleMakeDTO>>(vehicleMake);
             return Ok(vehicleMakeDto);
         }
 
-       
+
 
 
 
@@ -43,18 +44,19 @@ namespace VehicleProject.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMake(VehicleMakeDTO vehicleMakeDto)
         {
-            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDto);
 
-            if (vehicleMake == null ||vehicleMake.Name.Trim() == string.Empty ||vehicleMake.Abrv.Trim() == string.Empty)
+            if (vehicleMakeDto == null || 
+                string.IsNullOrEmpty(vehicleMakeDto.Name) || string.IsNullOrEmpty(vehicleMakeDto.Abrv))
             {
                 return StatusCode(StatusCodes.Status400BadRequest, "Error");
             }
+            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDto);
             await _vehicleService.AddAsync(vehicleMake);
             await _vehicleService.CommitAsync();
             return StatusCode(StatusCodes.Status201Created, "Created");
         }
 
-       
+
 
 
 
@@ -65,10 +67,8 @@ namespace VehicleProject.WebAPI.Controllers
             {
 
 
-                if (id == 0 ||
-                    vehicleMakeDto == null ||
-                    vehicleMakeDto.Name.Trim() == string.Empty ||
-                    vehicleMakeDto.Abrv.Trim() == string.Empty
+                if (id == 0 || vehicleMakeDto == null ||
+                    string.IsNullOrEmpty(vehicleMakeDto.Name) || string.IsNullOrEmpty(vehicleMakeDto.Abrv)
                     ) return BadRequest();
 
                 var vehicleMake = await _vehicleService.GetById<VehicleMake>(id);
@@ -85,8 +85,8 @@ namespace VehicleProject.WebAPI.Controllers
                 await _vehicleService.CommitAsync();
 
                 return Ok();
-            } 
-            catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
@@ -95,13 +95,13 @@ namespace VehicleProject.WebAPI.Controllers
         }
 
 
-      
+
 
 
         // DELETE api/<VehicleAPIController>/<ActionName>/{id}
         [HttpDelete("{id}")]
 
-        public async Task<ActionResult> DeleteMake(int id)
+        public async Task<IActionResult> DeleteMake(int id)
         {
             try
             {
@@ -123,14 +123,15 @@ namespace VehicleProject.WebAPI.Controllers
                 await _vehicleService.DeleteAsync(vehicleMake);
                 await _vehicleService.CommitAsync();
                 return Ok();
-            }catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         [HttpGet("filter")]
-        public async Task<ActionResult> SearchByQueryString([FromQuery] string s = "",
+        public async Task<IActionResult> SearchByQueryString([FromQuery] string s = "",
                                               [FromQuery] string orderby = "asc",
                                               [FromQuery] int per_page = 0,
                                               [FromQuery] int page = 0)

@@ -22,28 +22,31 @@ namespace VehicleProject.WebAPI.Controllers
 
         // GET api/<VehicleAPIController>/<ActionName>/
         [HttpGet]
-        public async Task<ActionResult> GetAllVehicleModel()
+        public async Task<IActionResult> GetAllVehicleModel()
         {
             var vehicleModel = await _vehicleService.GetAll<VehicleModel>();
-            var vehicleModelDto = _mapper.Map<IEnumerable<VehicleModelDTO>>(vehicleModel);
 
-            if (vehicleModel == null)
+            if (vehicleModel == null || vehicleModel.Count() == 0)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error");
+                return StatusCode(StatusCodes.Status404NotFound, "Error");
             }
+
+            var vehicleModelDto = _mapper.Map<IEnumerable<VehicleModelDTO>>(vehicleModel);
             return Ok(vehicleModelDto);
         }
 
         // POST api/<VehicleAPIController>/<ActionName>/{vehicleMake}
         [HttpPost]
-        public async Task<ActionResult> AddModel(VehicleModelDTO vehicleModelDTO)
+        public async Task<IActionResult> AddModel(VehicleModelDTO vehicleModelDTO)
         {
-            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelDTO);
+           
 
-            if (vehicleModel == null)
+            if (vehicleModelDTO == null ||  
+                string.IsNullOrEmpty(vehicleModelDTO.Name) || string.IsNullOrEmpty(vehicleModelDTO.Abrv))
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error");
+                return StatusCode(StatusCodes.Status400BadRequest, "Error");
             }
+            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelDTO);
             await _vehicleService.AddAsync(vehicleModel);
             await _vehicleService.CommitAsync();
             return StatusCode(StatusCodes.Status201Created, "Created");
@@ -51,20 +54,23 @@ namespace VehicleProject.WebAPI.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateModel(int id, VehicleModelDTO vehicleModelDto)
+        public async Task<IActionResult> UpdateModel(int id, VehicleModelDTO vehicleModelDto)
         {
             try
             {
 
-                if (id == 0) return BadRequest();
+                if (id == 0 || vehicleModelDto == null ||
+                    string.IsNullOrEmpty(vehicleModelDto.Name) || string.IsNullOrEmpty(vehicleModelDto.Abrv)
+                    ) return BadRequest();
 
                 var vehicleModel = await _vehicleService.GetById<VehicleModel>(id);
 
-                //test 
+                
                 if (vehicleModel == null) return StatusCode(StatusCodes.Status404NotFound, "Error");
 
                 var vehicleModelUpdate = _mapper.Map<VehicleModel>(vehicleModelDto);
 
+ 
                 vehicleModelUpdate.Id = id;
 
                 await _vehicleService.UpdateAsync(vehicleModelUpdate);
@@ -83,7 +89,7 @@ namespace VehicleProject.WebAPI.Controllers
 
         // DELETE api/<VehicleAPIController>/<ActionName>/{id}
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteModel(int id)
+        public async Task<IActionResult> DeleteModel(int id)
         {
 
             if (id == 0) return BadRequest();
@@ -100,7 +106,7 @@ namespace VehicleProject.WebAPI.Controllers
         }
 
         [HttpGet("filter")]
-        public async Task<ActionResult> SearchByQueryString([FromQuery] string s = "",
+        public async Task<IActionResult> SearchByQueryString([FromQuery] string s = "",
                                              [FromQuery] string orderby = "asc",
                                              [FromQuery] int per_page = 0,
                                              [FromQuery] int page = 0)

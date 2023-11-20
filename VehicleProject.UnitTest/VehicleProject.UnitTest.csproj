@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Vehicle.Service\VehicleProject.Service.csproj" />
     <ProjectReference Include="..\VehicleProject.RepositoryCommon\VehicleProject.Repository.Common.csproj" />
     <ProjectReference Include="..\VehicleProject.WebAPI\VehicleProject.WebAPI.csproj" />
   </ItemGroup>
