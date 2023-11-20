@@ -127,7 +127,14 @@ namespace VehicleProject.Repository
 
        public async Task<T> GetById<T>(long id) where T : BaseEntity
         {
-            return await _context.Set<T>().FirstAsync(x => x.Id == id);
+            try
+            {
+                return await _context.Set<T>().SingleOrDefaultAsync(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
 

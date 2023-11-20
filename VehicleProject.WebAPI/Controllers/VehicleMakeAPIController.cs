@@ -41,13 +41,13 @@ namespace VehicleProject.WebAPI.Controllers
 
         // POST api/<VehicleAPIController>/<ActionName>/{vehicleMake}
         [HttpPost]
-        public async Task<ActionResult> AddMake(VehicleMakeDTO vehicleMakeDto)
+        public async Task<IActionResult> AddMake(VehicleMakeDTO vehicleMakeDto)
         {
             var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDto);
 
-            if (vehicleMake == null)
+            if (vehicleMake == null ||vehicleMake.Name.Trim() == string.Empty ||vehicleMake.Abrv.Trim() == string.Empty)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error");
+                return StatusCode(StatusCodes.Status400BadRequest, "Error");
             }
             await _vehicleService.AddAsync(vehicleMake);
             await _vehicleService.CommitAsync();
@@ -59,13 +59,17 @@ namespace VehicleProject.WebAPI.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateMake(int id, VehicleMakeDTO vehicleMakeDto)
+        public async Task<IActionResult> UpdateMake(int id, VehicleMakeDTO vehicleMakeDto)
         {
             try
             {
 
 
-                if (id == 0) return BadRequest();
+                if (id == 0 ||
+                    vehicleMakeDto == null ||
+                    vehicleMakeDto.Name.Trim() == string.Empty ||
+                    vehicleMakeDto.Abrv.Trim() == string.Empty
+                    ) return BadRequest();
 
                 var vehicleMake = await _vehicleService.GetById<VehicleMake>(id);
 
@@ -99,24 +103,30 @@ namespace VehicleProject.WebAPI.Controllers
 
         public async Task<ActionResult> DeleteMake(int id)
         {
-            if (id == 0) return BadRequest();
-            var vehicleMake = await _vehicleService.GetById<VehicleMake>(id);
-            if (vehicleMake == null)
+            try
             {
-                return StatusCode(StatusCodes.Status404NotFound, "Error");
-            }
+                if (id == 0) return BadRequest();
+                var vehicleMake = await _vehicleService.GetById<VehicleMake>(id);
+                if (vehicleMake == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, "Error");
+                }
 
-            //delete all dependent models if we are deleting make
-            var vehicleModels = await _vehicleService.GetAll<VehicleModel>();
+                //delete all dependent models if we are deleting make
+                var vehicleModels = await _vehicleService.GetAll<VehicleModel>();
 
-            foreach (var vehicleModel in vehicleModels.Where(x => x.MakeId == id))
+                foreach (var vehicleModel in vehicleModels.Where(x => x.MakeId == id))
+                {
+                    await _vehicleService.DeleteAsync(vehicleModel);
+                }
+
+                await _vehicleService.DeleteAsync(vehicleMake);
+                await _vehicleService.CommitAsync();
+                return Ok();
+            }catch (Exception ex) 
             {
-                await _vehicleService.DeleteAsync(vehicleModel);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-
-            await _vehicleService.DeleteAsync(vehicleMake);
-            await _vehicleService.CommitAsync();
-            return Ok();
         }
 
         [HttpGet("filter")]
